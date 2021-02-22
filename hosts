@@ -1,1 +1,1 @@
-weblogic ansible_ssh_host=192.168.56.102 ansible_ssh_port=22
+weblogic ansible_ssh_host=192.168.42.153 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=Aa7medan

@@ -6,10 +6,12 @@
 
 # ==> Create managed server on Domain
 - name: Copy create managed server script
-  template: src=create-managed.py dest={{ mw_installer_folder }} owner={{ oracle_user }} group={{ oracle_group }}
+  template: src=create-managed.py dest={{ mw_installer_folder }} owner={{ oracle_user }} group="{{ oracle_group }}"
+
 - name: Execute create managed server script
+  become: yes
+  become_user: '{{ oracle_user }}'
   shell: '{{ weblogic_home }}/common/bin/wlst.sh {{ mw_installer_folder }}/create-managed.py'
-  sudo_user: '{{ oracle_user }}'
     
 # ==> Start managed server
 - name: Create security folder for managed server
@@ -18,8 +20,11 @@
   template: src=boot.properties dest={{ domain_home }}/servers/{{ managed_server_name }}/security/ owner={{ oracle_user }} group={{ oracle_group }}
 - name: Copy Start Managed Server Script
   template: src=start-managed-server.py dest={{ mw_installer_folder }} owner={{ oracle_user }} group={{ oracle_group }}
+
 - name: Start Managed Server
+  become: yes
+  become_user: '{{ oracle_user }}'
   shell: "{{ weblogic_home }}/common/bin/wlst.sh {{ mw_installer_folder }}/start-managed-server.py"
-  sudo_user: '{{ oracle_user }}'
+
 - name: Wait for Managed Server to startup 
   wait_for: host={{ server_hostname }} port={{ managed_server_port }} delay=2 timeout=60
