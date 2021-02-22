@@ -1,3 +1,6 @@
+This is a cloned repository, plan is to take Stevaras work and make it work on installing fmw 12.2.1.4
+=================
+
 Weblogic Ansible Playbook
 =========================
 
